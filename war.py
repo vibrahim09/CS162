@@ -30,3 +30,5 @@ card1 = player1_hand.pop()
 card2 = player2_hand.pop()
 print(card1)
 print(card2)
+
+print(len(player1_hand))
