@@ -6,7 +6,10 @@ from typing import TextIO
 
 def open_file() -> TextIO:
     """Insert Docstring"""
-    pass  # replace this line with your code
+    with open("indian_food.csv", "r") as indian_food:
+        csv_reader = csv.DictReader(indian_food)
+        print(csv_reader)
+
 
 
 def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
@@ -51,3 +54,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    open_file()
