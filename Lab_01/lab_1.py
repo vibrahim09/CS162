@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Module docstring."""
-import csv
+from csv import DictReader
 from typing import TextIO
 
 
 def open_file() -> TextIO:
     """Insert Docstring"""
-    with open("indian_food.csv", "r") as indian_food:
-        csv_reader = csv.DictReader(indian_food)
-        print(csv_reader)
+    with open("indian_food.csv", "r", encoding="utf8") as indian_food:
+        csv_reader = DictReader(indian_food)
+        for row in csv_reader:
+            print(row)
 
 
 
