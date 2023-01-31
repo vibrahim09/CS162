@@ -8,14 +8,15 @@ def open_file() -> TextIO:
     """Insert Docstring"""
     with open("indian_food.csv", "r", encoding="utf8") as indian_food:
         csv_reader = DictReader(indian_food)
-        for row in csv_reader:
-            print(row)
+        print(csv_reader[0])
 
-
+    return 
 
 def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
     """Insert Docstring"""
-    pass  # replace this line with your code
+    for row in file:
+        data = data.append(row)
+        print(data)
 
 
 def get_ingredients(data: dict, foods: list[str]) -> set[str]:
@@ -55,4 +56,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-    open_file()
+    print(open_file())
+    
