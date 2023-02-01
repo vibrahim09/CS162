@@ -6,23 +6,45 @@ from typing import TextIO
 
 def open_file() -> TextIO:
     """Insert Docstring"""
-    with open("indian_food.csv", "r", encoding="utf8") as indian_food:
-        csv_reader = DictReader(indian_food)
-        print(csv_reader[0])
-
-    return 
+    while True:
+        try:
+            user_file = input("Input a file name: ")
+            with open(user_file, "r", encoding="utf8") as indian_food:
+                build_dictionary(indian_food)
+                break
+        except FileNotFoundError as e:
+            print(f"{e}, please try again.")
 
 def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
     """Insert Docstring"""
-    for row in file:
-        data = data.append(row)
-        print(data)
+    csv_reader = DictReader(file)
+    data = {}
+    for row in csv_reader:
+        name = row["name"]
+        ingredients = row["ingredients"]
+        diet = row["diet"]
+        prep_time = row["prep_time"]
+        cook_time = row["cook_time"]
+        flavor_profile = row["flavor_profile"]
+        course = row["course"]
+        state = row["state"]
+        region = row["region"]
 
+        if region not in data:
+            data[region] = {}
+        if state not in data:
+            data[region][state] ={}
+        if name not in data:
+            data[region][state] ={name}
+
+        data[region][state] = {name : [ingredients, diet, (prep_time, cook_time), flavor_profile]} 
+            
+    print(data)
 
 def get_ingredients(data: dict, foods: list[str]) -> set[str]:
     """Insert Docstring"""
     pass  # replace this line with your code
-
+# indian_food_small.csv
 
 def get_useful_and_missing_ingredients(
     data: dict, foods: list[str], pantry: list[str]
@@ -56,5 +78,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print(open_file())
-    
+    file = open_file()
