@@ -2,13 +2,15 @@
 """Module docstring."""
 from csv import DictReader
 from typing import TextIO
-
+from pathlib import Path
 
 def open_file() -> TextIO:
     """Insert Docstring"""
     while True:
         try:
             user_file = input("Input a file name: ")
+            THIS_FOLDER = Path(__file__).parent.resolve()
+            user_file = THIS_FOLDER / user_file
             with open(user_file, "r", encoding="utf8") as indian_food:
                 build_dictionary(indian_food)
                 break
