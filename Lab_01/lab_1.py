@@ -8,15 +8,16 @@ def open_file() -> TextIO:
     """Insert Docstring"""
     while True:
         try:
-            user_file = input("Input a file name: ")
+            user_file = "indian_food_small.csv"
+            # user_file = input("Input a file name: ")
             THIS_FOLDER = Path(__file__).parent.resolve()
             user_file = THIS_FOLDER / user_file
             with open(user_file, "r", encoding="utf8") as indian_food:
-                build_dictionary(indian_food)
+                data = build_dictionary(indian_food)
                 break
         except FileNotFoundError as e:
             print(f"{e}, please try again.")
-
+    return data
 def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
     """Insert Docstring"""
     csv_reader = DictReader(file)
@@ -40,12 +41,16 @@ def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
             data[region][state] ={name}
 
         data[region][state] = {name : [ingredients, diet, (prep_time, cook_time), flavor_profile]} 
-            
-    print(data)
+
+    return data   
 
 def get_ingredients(data: dict, foods: list[str]) -> set[str]:
     """Insert Docstring"""
-    pass  # replace this line with your code
+    for region, state in data.items():
+        print(region, state)
+        
+
+
 # indian_food_small.csv
 
 def get_useful_and_missing_ingredients(
@@ -81,3 +86,6 @@ def main():
 if __name__ == "__main__":
     main()
     file = open_file()
+    print(file)
+    print(file["East"]["West Bengal"]["Ghevar"][0])
+    get_ingredients(file, ["Balu shahi", "Ghevar"])
