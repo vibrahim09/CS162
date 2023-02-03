@@ -3,6 +3,7 @@
 from csv import DictReader
 from typing import TextIO
 from pathlib import Path
+import pprint
 
 def open_file() -> TextIO:
     """Insert Docstring"""
@@ -24,7 +25,7 @@ def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
     data = {}
     for row in csv_reader:
         name = row["name"]
-        ingredients = row["ingredients"]
+        ingredients = set(row["ingredients"].split(","))
         diet = row["diet"]
         prep_time = row["prep_time"]
         cook_time = row["cook_time"]
@@ -35,19 +36,29 @@ def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
 
         if region not in data:
             data[region] = {}
-        if state not in data:
+        if state not in data[region]:
             data[region][state] ={}
-        if name not in data:
-            data[region][state] ={name}
-
-        data[region][state] = {name : [ingredients, diet, (prep_time, cook_time), flavor_profile]} 
+        if name not in data[region][state]:
+            data[region][state][name] = {
+                "ingredients" : ingredients, 
+                "diet" : diet, 
+                "prep_time" : prep_time, 
+                "cook_time" : cook_time, 
+                "flavor_profile" : flavor_profile, 
+            }
 
     return data   
 
 def get_ingredients(data: dict, foods: list[str]) -> set[str]:
     """Insert Docstring"""
-    for region, state in data.items():
-        print(region, state)
+    items = list(data.values())
+    for region in items:
+        state = list(region.values())
+        for name in state:
+             for names in foods:
+                if names in name:
+                    user_foods = name[names]
+                    print(user_foods["ingredients"])
         
 
 
@@ -57,7 +68,9 @@ def get_useful_and_missing_ingredients(
     data: dict, foods: list[str], pantry: list[str]
 ) -> tuple[list[str], list[str]]:
     """Insert Docstring"""
-    pass  # replace this line with your code
+    get_ingredients(data, foods)
+
+
 
 
 def get_list_of_foods(data: dict, ingredients: list[str]) -> list[str]:
@@ -87,5 +100,7 @@ if __name__ == "__main__":
     main()
     file = open_file()
     print(file)
-    print(file["East"]["West Bengal"]["Ghevar"][0])
+    print("\n")
     get_ingredients(file, ["Balu shahi", "Ghevar"])
+    ingredients_you_have = ["milk", "sugar", "ghee", "rice", "nuts"]
+    get_useful_and_missing_ingredients(file, ["Balu shahi", "Ghevar"], ingredients_you_have)
