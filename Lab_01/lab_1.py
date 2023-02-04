@@ -6,11 +6,15 @@ from pathlib import Path
 import pprint
 
 def open_file() -> TextIO:
-    """Insert Docstring"""
+    """IT opens a csv file and reads it using the csv module
+
+        returns:
+            a dict containing indian_food
+    """
     while True:
         try:
-            user_file = "indian_food_small.csv"
-            # user_file = input("Input a file name: ")
+            # user_file = "indian_food_small.csv"
+            user_file = input("Input a file name: ")
             THIS_FOLDER = Path(__file__).parent.resolve()
             user_file = THIS_FOLDER / user_file
             with open(user_file, "r", encoding="utf8") as indian_food:
@@ -50,7 +54,14 @@ def build_dictionary(file: TextIO) -> dict[str, dict[str, dict[str, list]]]:
     return data   
 
 def get_ingredients(data: dict, foods: list[str]) -> set[str]:
-    """Insert Docstring"""
+    """Takes main dictionary and a list of foods provided by the user and returns a set of ingredients
+    needed for those foods.
+        args:
+            data: dict containing csv file for indian_foods.
+            foods: list of foods given by the user.
+        returns:
+            set: of all ingredients for those foods.
+    """
     ingredients_set = set()
     items = list(data.values())
     for region in items:
@@ -71,7 +82,15 @@ def get_ingredients(data: dict, foods: list[str]) -> set[str]:
 def get_useful_and_missing_ingredients(
     data: dict, foods: list[str], pantry: list[str]
 ) -> tuple[list[str], list[str]]:
-    """Insert Docstring"""
+    """Takes main dictionary, list of foods by user, and ingredients by the user and
+    returns a tuple containing the useful ingredients and the missing ingredients for the foods specified by the user.
+        Args:
+            data: dict containing csv file for indian_foods.
+            pantry: list of ingredients given by the user.
+            foods: list of foods given by the user.
+        returns:
+            tuple: containing useful and needed ingredients for the foods.
+    """
     dishes = get_ingredients(data, foods)
     pantry = set(pantry)
     ingredients_you_have_and_need = dishes & pantry
@@ -84,10 +103,16 @@ def get_useful_and_missing_ingredients(
 
 
 def get_list_of_foods(data: dict, ingredients: list[str]) -> list[str]:
-    """Insert Docstring"""
+    """Takes the main dictionary and a list of ingredients and gives back a list of foods that
+        can be made with those ingredients.
+        Args:
+            data: dict containing csv file for indian_foods
+            ingredients: list of ingredients given by the user.
+        returns:
+            a list of foods.
+    """
     food_list = []
     ingredients = set(ingredients)
-    print(ingredients)
     for region, state in data.items():
         for state, food_name in state.items():
             for food_name, ingredient in food_name.items():
@@ -101,7 +126,8 @@ def get_list_of_foods(data: dict, ingredients: list[str]) -> list[str]:
 
 
 def get_food_by_preference(data: dict, preferences: list[str]) -> list[str]:
-    """Insert Docstring"""
+    """
+    """
     pass  # replace this line with your code
 
 
@@ -113,27 +139,40 @@ def main():
         C. Input various foods and ingredients and get the useful and missing ingredients!
         D. Input various foods and preferences and get only the foods specified by your preference!
         Q. Quit
-        : """
+            """
     file = open_file()
     user_input = ""
     while user_input != "q":
         print(MENU)
-        user_input = input(":").lower()
+        user_input = input("Your choice: ").lower()
         choice_list = "a", "b", "c", "d", "e", "q"
         list(choice_list)
         if user_input not in choice_list:
             print("invalid input. Please enter a valid input (A_D, Q)")
         elif user_input == "a":
-            foods_user = input("Enter foods, separated by commas: ")
+            foods_user = input("Enter foods, separated by commas: ").lower()
             foods_user = foods_user.split(",")
-            print(type(foods_user))
+            foods_user = (list(map(str.strip, foods_user)))
             print(get_ingredients(file, foods_user))
+        elif user_input == "b":
+            ingredients_user = input("Enter ingredients, separated by commas: ").lower()
+            ingredients_user = ingredients_user.split(",")
+            ingredients_user = (list(map(str.strip, ingredients_user)))
+            print("Foods:")
+            print(get_list_of_foods(file, ingredients_user))
+        elif user_input == "c":
+            foods_user = input("Enter foods, separated by commas: ").lower()
+            foods_user = foods_user.split(",")
+            foods_user = (list(map(str.strip, foods_user)))
+            ingredients_user = input("Enter ingredients, separated by commas: ").lower()
+            ingredients_user = ingredients_user.split(",")
+            ingredients_user = (list(map(str.strip, ingredients_user)))
+            tuple2 = get_useful_and_missing_ingredients(file, foods_user, ingredients_user)
+            print(f"Useful Ingredients: {tuple2[0]}")
+            print(f"Missing ingredients: {tuple2[1]}")
+        elif user_input == "d":
+            print("coming on the next update!")
 
-    ingredients_you_have = ["milk", "sugar", "ghee", "rice", "nuts", "jaggery", "peanuts", "yogurt", "rice flour", "coconut"]
-    print(get_useful_and_missing_ingredients(file, ["Balu shahi", "Ghevar"], ingredients_you_have))
-    print(get_list_of_foods(file, ingredients_you_have))
-    
-    
     print("Thanks for playing!")
 
 
