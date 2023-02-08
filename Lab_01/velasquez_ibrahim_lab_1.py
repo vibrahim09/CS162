@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 """Module docstring."""
 from csv import DictReader
 from typing import TextIO
