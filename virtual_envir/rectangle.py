@@ -103,6 +103,10 @@ if __name__ == "__main__":
     print(a.area())
     print(b.area())
     
+    print(a.tl)
+    print(a.br)
+    print(b.tl)
+    print(b.br)
     a.intersection(b)
 
     print(a == b)
@@ -112,5 +116,6 @@ if __name__ == "__main__":
     print(c)
 
     print(b.__repr__())
-    
+    a.contains(b)
+    a.overlaps(b)
     pass

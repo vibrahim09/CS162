@@ -1,6 +1,6 @@
-from shape import Shape
-from dataclasses import dataclass, field
 from math import pi
+from dataclasses import dataclass, field
+from shape import Shape
 
 @dataclass
 class Circle(Shape):
@@ -15,6 +15,18 @@ class Circle(Shape):
     x: float
     y: float
     radius: float
+    
+    tl: tuple = field(init=False, repr=False)
+    br: tuple = field(init=False, repr=False)
+    
+    def __post_init__(self) -> None:
+        """Initializes the Rectangles plot points for the top left(tl) and bottom right(br).
+        We do this post init to grab the x, y, width and height to use them for calculations.
+    
+        Returns: None
+        """
+        self.tl: tuple = (self.x, self.y)
+        self.br: tuple = (self.x + self.width, self.y - self.height)
     
     def area(self) -> float:
         """Gives the area of the circle.
@@ -66,11 +78,12 @@ class Circle(Shape):
     
     
 if __name__ == "__main__":
+    # Test lines
     c = Circle(2, 3, 2)
     d = Circle(2, 3, 5)
     print(c)
     print(d)
-    
+    print(c == d)
     print(c.diameter())
     print(c.area())
     print(d.diameter())
@@ -78,6 +91,3 @@ if __name__ == "__main__":
     print(c.circumference())
     
     print(d.circumference())
-    
-    
-        
