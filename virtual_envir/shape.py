@@ -1,18 +1,17 @@
+from dataclasses import dataclass
+
+@dataclass
 class Shape():
-    def __init__(self):
-        pass
+    
     def area(self):
-        return float
-    def create(self):
-        return Shape
+        return (self.height * self.width)
+    def create(cls):
+        pass
     def contains(self, other):
-        return bool
+        pass
     def overlaps(self, other):
-        return bool
-    def __str__(self):
-        return str
-    def __repr__(self):
-        return str
-    
-    
-    
+        pass
+    def __str__(self) -> str:
+        return f"This Shape top left coordinate is ({self.x},{self.y}) with width: {self.width}, and height: {self.height}"
+    def __repr__(self) -> str:
+        return f"x = {self.x}, y = {self.y}, width = {self.width}, height = {self.height}"
