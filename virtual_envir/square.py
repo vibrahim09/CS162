@@ -32,17 +32,20 @@ class Square(Rectangle):
 
 
 if __name__ == '__main__':
-    a= Square(1,5,3)
-    b = Square(3,3,5)
+    # Testing lines.
+    # a= Square(1,5,3)
+    # b = Square(3,3,5)
     
-    print(a)
-    print(b)
+    # print(a.area())
+    # print(b.area())
+    # print(a)
+    # print(b)
     
-    a.intersection(b)
+    # a.intersection(b)
     
-    c = a.union(b)
+    # c = a.union(b)
     
-    print(c)
+    # print(c)
     
-    print(a == b)
-    
+    # print(a == b)
+    pass
