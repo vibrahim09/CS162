@@ -24,8 +24,8 @@ class Shape():
             bool: True if shape contains another shape within its bounds.
                 False if shape is not in bunds of shape
         """
-        if self.tl[0] < other.tl[0] and self.tl[1] < other.tl[1]:
-            if other.br[0] < self.br[0] and other.br[1] < self.br[1]:
+        if self.tl[0] < other.tl[0] and other.tl[1] < self.tl[1]:
+            if other.br[0] < self.br[0] and self.br[1] < other.br[1]:
                 print("Shape contains other shape.")
                 return True
             else:
@@ -44,15 +44,15 @@ class Shape():
             bool: True is interception exist, flase otherwise
         """
         # Check if rectangle has area of zero.
-        if self.area() == 0.0:
-            return False
+        # if self.area() == 0.0:
+        #     return False
         x, y = 0, 1 #For simplicity and redability.
         # Check if rectangel is on left side of other.
-        if self.tl[x] > other.br[y] or other.tl[x] < self.br[x]:
+        if self.tl[x] > other.br[x] or other.tl[x] > self.br[x]:
             return False
         
         # Check if rectangle is above the other.
-        if self.br[1] > other.tl[1] or other.br[1] > self.tl[1]:
+        if self.br[y] > other.tl[y] or other.br[y] > self.tl[y]:
             return False
         
         else:

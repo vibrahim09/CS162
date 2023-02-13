@@ -28,24 +28,3 @@ class Square(Rectangle):
         self.height = self.width
         self.tl: tuple = (self.x, self.y)
         self.br: tuple = (self.x + self.width, self.y - self.height)
-
-
-
-if __name__ == '__main__':
-    # Testing lines.
-    # a= Square(1,5,3)
-    # b = Square(3,3,5)
-    
-    # print(a.area())
-    # print(b.area())
-    # print(a)
-    # print(b)
-    
-    # a.intersection(b)
-    
-    # c = a.union(b)
-    
-    # print(c)
-    
-    # print(a == b)
-    pass

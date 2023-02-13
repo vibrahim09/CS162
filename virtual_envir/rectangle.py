@@ -93,29 +93,3 @@ class Rectangle(Shape):
     
     # def __eq__(self, other) -> bool:
     """Used dataclasses built in __eq__ method to compare if both rectangles are of equal x, y, width and height"""
-    
-
-if __name__ == "__main__":
-    # Testing lines.
-    a = Rectangle(1, 5, 3, 5)
-    b = Rectangle(3, 7, 4, 4)
-    
-    print(a.area())
-    print(b.area())
-    
-    print(a.tl)
-    print(a.br)
-    print(b.tl)
-    print(b.br)
-    a.intersection(b)
-
-    print(a == b)
-
-    c = a.union(b)
-
-    print(c)
-
-    print(b.__repr__())
-    a.contains(b)
-    a.overlaps(b)
-    pass
