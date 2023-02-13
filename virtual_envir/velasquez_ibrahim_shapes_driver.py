@@ -6,12 +6,14 @@ from circle import Circle
 
 def rectangles():
     """Construct a few instances of rectangle classes"""
-    print("\n")
+    print("\nRECTANGLES:")
     a = Rectangle(1, 5, 7, 5)
     b = Rectangle(2, 7, 4, 3)
     c = Rectangle(6, 8, 4, 3)
     d = Rectangle(1, 5, 7, 5)
     e = Rectangle(2, 4, 2, 2)
+    print()
+    print("Area:")
     print(a.area())
     print(b.area())
     print()
@@ -35,7 +37,7 @@ def rectangles():
     b.union(a)
     a.union(c)
     print()
-    #Uses dataclasses to sinmplify functionality 
+    #Uses dataclasses to simplify functionality 
     print("Equalities: ")
     print(a == b)
     print(a == d)
@@ -53,9 +55,11 @@ def squares():
     print("\nSQUARES: ")
     a = Square(1, 5, 7)
     b = Square(2, 7, 4)
-    c = Square(6, 8, 4)
+    c = Square(9, 10, 4)
     d = Square(1, 5, 7)
     e = Square(2, 4, 2)
+    print()
+    print("Area:")
     print(a.area())
     print(b.area())
     print()
@@ -79,7 +83,7 @@ def squares():
     b.union(a)
     a.union(c)
     print()
-    #Uses dataclasses to sinmplify functionality 
+    #Uses dataclasses to simplify functionality 
     print("Equalities: ")
     print(a == b)
     print(a == d)
@@ -91,12 +95,33 @@ def squares():
 
 def circles():
     """Construct a few instances of circles classes"""
-    print("\nSQUARES: ")
-    a = Square(1, 5, 7)
-    b = Square(2, 7, 4)
-    c = Square(6, 8, 4)
-    d = Square(1, 5, 7)
-    e = Square(2, 4, 2)
+    print("\nCIRCLES: ")
+    a = Circle(5, 4, 3)
+    b = Circle(5, 4, 2)
+    c = Circle(6, 8, 4)
+    d = Circle(2, 5, 7)
+    e = Circle(2, 4, 2)
+    f = Circle(5, 4, 2)
+    g = Circle(3, 9, 2)
+    print()
+    print("Area:")
+    print(a.area())
+    print()
+    print("Diameter: ")
+    print(b.diameter())
+    print()    
+    print("Circumference:")
+    print(c.circumference())
+    print()
+    print("Contains:")
+    a.contains(b)
+    print()
+    print("Overlaps:")
+    d.overlaps(e)
+    f.overlaps(g)
+    
+        
+    
 
     
 def main():

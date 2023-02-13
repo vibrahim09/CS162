@@ -41,13 +41,13 @@ class Shape():
             Other (Shape): an Instance of shape
             
         returns:
-            bool: True is interception exist, flase otherwise
+            bool: True is interception exist, false otherwise
         """
         # Check if rectangle has area of zero.
         # if self.area() == 0.0:
         #     return False
-        x, y = 0, 1 #For simplicity and redability.
-        # Check if rectangel is on left side of other.
+        x, y = 0, 1 #For simplicity and readability.
+        # Check if rectangle is on left side of other.
         if self.tl[x] > other.br[x] or other.tl[x] > self.br[x]:
             return False
         

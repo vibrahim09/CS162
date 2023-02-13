@@ -1,4 +1,4 @@
-from math import pi
+import math
 from dataclasses import dataclass, field
 from shape import Shape
 
@@ -16,18 +16,35 @@ class Circle(Shape):
     y: float
     radius: float
     
-    tl: tuple = field(init=False, repr=False)
-    br: tuple = field(init=False, repr=False)
-    
-    def __post_init__(self) -> None:
-        """Initializes the Rectangles plot points for the top left(tl) and bottom right(br).
-        We do this post init to grab the x, y, width and height to use them for calculations.
-    
-        Returns: None
+    def contains(self, other):
+        """Check if a circle is inside another circle.
+        
+        Args:
+            other: (Circle): Instance of Circle
+            
+        Returns:
+            True if the circle is inside the other circle. False otherwise.
         """
-        self.tl: tuple = (self.x, self.y)
-        self.br: tuple = (self.x + self.width, self.y - self.height)
-    
+        d = math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        if d <= self.radius - other.radius:
+            print("Shape contains other shape.")
+            return True
+        elif d <= other.radius - self.radius:
+            print("Shape contains other shape.")
+            return True
+        else:
+            print("Shapes do not contain each other.")
+        
+    def overlaps(self, other):
+        """ Checks if circle overlaps with other circle."""
+        d = math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        if d <= self.radius + other.radius:
+            print("Shapes overlap!")
+            return True
+        else:
+            print("Shapes do not overlap!")
+        
+
     def area(self) -> float:
         """Gives the area of the circle.
         
@@ -35,7 +52,7 @@ class Circle(Shape):
             Area: (float) the area of the circle.
         """
         
-        return round(pi * self.radius ** 2, 2)
+        return round(math.pi * self.radius ** 2, 2)
     
     def diameter(self) -> float:
         """Returns the diameter of the circle.
@@ -52,7 +69,7 @@ class Circle(Shape):
             circumference: (float) circumference of the circle rounded by 4 significant figures.
         """
         
-        return round(2 * pi * self.radius, 2)
+        return round(2 * math.pi * self.radius, 2)
     
     def __str__(self) -> str:
         """Returns a string representation of the circle.
@@ -72,22 +89,3 @@ class Circle(Shape):
             str: A string from which the card could be instantiated.
         """
         return f"x = {self.x}, y = {self.y}, radius = {self.radius}"
-    
-    
-    
-    
-    
-if __name__ == "__main__":
-    # Test lines
-    c = Circle(2, 3, 2)
-    d = Circle(2, 3, 5)
-    print(c)
-    print(d)
-    print(c == d)
-    print(c.diameter())
-    print(c.area())
-    print(d.diameter())
-    
-    print(c.circumference())
-    
-    print(d.circumference())
