@@ -1,3 +1,4 @@
+from circle import Circle
 from shape import Shape
 from dataclasses import dataclass, field
 
@@ -12,8 +13,6 @@ class Rectangle(Shape):
         height: (float) height of the rectangle.
     """
     
-    x: float
-    y: float
     width: float
     height: float
     tl: tuple = field(init=False, repr=False)
@@ -27,6 +26,52 @@ class Rectangle(Shape):
         """
         self.tl: tuple = (self.x, self.y)
         self.br: tuple = (self.x + self.width, self.y - self.height)
+        
+    def area(self):
+        """Calculates the area of the shape.
+
+        Returns:
+            float: area of the shape
+        """
+        return float(self.height * self.width)
+    
+    def contains(self, other) -> bool:
+        """Checks if shape contains another shape within its bounds.
+        Args:   
+            other (Shape): an Instance of shape (Rectangle, square, or circle)
+            
+        Returns:    
+            bool: True if shape contains another shape within its bounds.
+                False if shape is not in bunds of shape
+        """
+        if isinstance(other, Rectangle):
+            if self.tl[0] < other.tl[0] and other.tl[1] < self.tl[1]:
+                if other.br[0] < self.br[0] and self.br[1] < other.br[1]:
+                    print("Shape contains other shape.")
+                    return True
+                else:
+                    print("Shape is not in bounds of shape")
+                    return False
+            else:
+                print("Shape is not in bounds of shape")
+                return False
+        elif isinstance(other, Circle):
+            if other.x + other.radius > self.br[0]:
+                print("it is outside of the rectangle")
+                return False
+            elif other.x - other.radius < self.tl[0]:
+                print("it is outside of the rectangle")
+                return False
+            elif other.y + other.radius > self.br[1]:
+                print("it is outside of the rectangle")
+                return False
+            elif other.y - self.radius < self.tl[1]:
+                print("it is outside of the rectangle")
+                return False
+            else:
+                print("it is inside of the rectangle")
+                return True 
+
 
     def perimeter(self) -> float:
         """Returns the perimeter of the rectangle
@@ -85,11 +130,34 @@ class Rectangle(Shape):
         # it will give us the new width and height of the union without the adding the intersection if there is one.
         x, y = 0, 1
         new_x = min(self.tl[x], other.tl[x])
-        new_y = min(self.tl[y], other.tl[y])
-        new_width = (max(self.x + self.width, other.x + other.width) -  new_x)
-        new_height = (max(self.y + self.height, other.y + other.height) - new_y)
-        print(f"New shape created by union has width: {new_width} and height: {new_height}")
+        new_y = max(self.tl[y], other.tl[y])
+        new_width = (max(self.br[x], other.br[x]) - new_x)
+        new_height = (min(self.br[y], other.br[y]) + new_y)
+        print(f"New shape created by union has coordinates: ({new_x}, {new_y}) with width: {new_width} and height: {new_height}")
         return Rectangle(new_x, new_y, new_width, new_height)
     
+    def __str__(self) -> str:
+        """Returns a string representation of the rectangle.
+            This is meant to be human readable.
+
+        returns: 
+            str: a string representation of the rectangle.
+        """
+        
+        return f"""This rectangle is initialized at point ({self.x}, {self.y}), with width = {self.width}, height = {self.height},
+    area = {self.area()}, and perimeter = {self.perimeter()}"""
+    
+    def __repr__(self) -> str:
+        """Generate a string representation of the shape.
+        
+        The output of repr() is meant to aid debugging. Is should uniquely
+        identify the object and it should be possible to instantiate a new
+        object using the returned value.
+        
+        Returns:
+            str: A string from which the shape could be instantiated.
+        """
+        return f"Rectangle (x = {self.x}, y = {self.y}, width = {self.width}, height = {self.height})"
+    
     # def __eq__(self, other) -> bool:
-    """Used dataclasses built in __eq__ method to compare if both rectangles are of equal x, y, width and height"""
+    """Used dataclasses built in __eq__ method to compare if both shape are of equal x, y, width and height"""

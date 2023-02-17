@@ -12,8 +12,6 @@ class Circle(Shape):
         radius: (float) radius of the circle. 
     """
     
-    x: float
-    y: float
     radius: float
     
     def contains(self, other):
@@ -75,17 +73,27 @@ class Circle(Shape):
         """Returns a string representation of the circle.
             This is meant to be human readable.
 
+        returns: 
+            str: a string representation of the circle.
         """
         
-        return f"This shapes initial coordinate is ({self.x}, {self.y}) with radius: {self.radius}."
+        return f"This circle initial coordinate is ({self.x}, {self.y}) with radius: {self.radius}."
     def __repr__(self) -> str:
-        """Generate a string representation of the card.
+        """Generate a string representation of the shape.
         
         The output of repr() is meant to aid debugging. Is should uniquely
         identify the object and it should be possible to instantiate a new
         object using the returned value.
         
         Returns:
-            str: A string from which the card could be instantiated.
+            str: A string from which the shape could be instantiated.
         """
-        return f"x = {self.x}, y = {self.y}, radius = {self.radius}"
+        return f"Circle (x = {self.x}, y = {self.y}, radius = {self.radius})"
+    
+    @classmethod
+    def create(cls):
+        """Creates a instance of the shape"""
+        return Circle(0,0,1)
+    
+    # def __eq__(self, other) -> bool:
+    """Used dataclasses built in __eq__ method to compare if both shape are of equal x, y, width and height"""

@@ -4,6 +4,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Shape():
+    """Model a circular shape. Initialized with dataclasses."""
+    
+    x: float
+    y: float
     
     def area(self):
         """Calculates the area of the shape.
@@ -11,9 +15,10 @@ class Shape():
         Returns:
             float: area of the shape
         """
-        return (self.height * self.width)
+        return NotImplementedError
     def create():
-        pass
+        """Creates a instance of the shape"""
+        raise NotImplementedError
     def contains(self, other) -> bool:
         """Checks if shape contains another shape within its bounds.
 
@@ -24,17 +29,8 @@ class Shape():
             bool: True if shape contains another shape within its bounds.
                 False if shape is not in bunds of shape
         """
-        if self.tl[0] < other.tl[0] and other.tl[1] < self.tl[1]:
-            if other.br[0] < self.br[0] and self.br[1] < other.br[1]:
-                print("Shape contains other shape.")
-                return True
-            else:
-                print("Shape is not in bounds of shape")
-                return False
-        else:
-            print("Shape is not in bounds of shape")
-            return False
-        
+        return NotImplementedError
+
     def overlaps(self, other):
         """Checks if shape overlaps another shape
         Args:
@@ -46,6 +42,7 @@ class Shape():
         # Check if rectangle has area of zero.
         # if self.area() == 0.0:
         #     return False
+        
         x, y = 0, 1 #For simplicity and readability.
         # Check if rectangle is on left side of other.
         if self.tl[x] > other.br[x] or other.tl[x] > self.br[x]:
@@ -61,8 +58,9 @@ class Shape():
         
     
     def __str__(self) -> str:
-        return f"This Shapes initial coordinate is ({self.x},{self.y}) with width: {self.width}, and height: {self.height}"
-    def __repr__(self) -> str:
-        return f"x = {self.x}, y = {self.y}, width = {self.width}, height = {self.height}"
+        """"""
+        return NotImplementedError
+    def __repr__(self) -> str: 
+        return NotImplementedError
 
 

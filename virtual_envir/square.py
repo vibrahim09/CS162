@@ -28,3 +28,28 @@ class Square(Rectangle):
         self.height = self.width
         self.tl: tuple = (self.x, self.y)
         self.br: tuple = (self.x + self.width, self.y - self.height)
+        
+    def __str__(self) -> str:
+        """Returns a string representation  of the square.
+        This is meant to be human readable.
+        
+        returns: 
+            str: a string representation of the square.
+        """
+
+        return f"This square is initialized at point ({self.x}, {self.y}), with width {self.width}, and height {self.height}."
+    
+    def __repr__(self) -> str:
+        """Generate a string representation of the shape.
+        
+        The output of repr() is meant to aid debugging. Is should uniquely
+        identify the object and it should be possible to instantiate a new
+        object using the returned value.
+        
+        Returns:
+            str: A string from which the shape could be instantiated.
+        """
+        return f"Square (x = {self.x}, y = {self.y}, width = {self.width}, height = {self.height})"
+    
+    # def __eq__(self, other) -> bool:
+    """Used dataclasses built in __eq__ method to compare if both shape are of equal x, y, width and height"""
