@@ -31,7 +31,7 @@ class Rectangle(Shape):
         """Calculates the area of the shape.
 
         Returns:
-            float: area of the shape
+            float: area of the shape.
         """
         return float(self.height * self.width)
     
@@ -62,16 +62,57 @@ class Rectangle(Shape):
             elif other.x - other.radius < self.tl[0]:
                 print("it is outside of the rectangle")
                 return False
-            elif other.y + other.radius > self.br[1]:
+            elif other.y - other.radius < self.br[1]:
                 print("it is outside of the rectangle")
                 return False
-            elif other.y - self.radius < self.tl[1]:
+            elif other.y + other.radius > self.tl[1]:
                 print("it is outside of the rectangle")
                 return False
             else:
                 print("it is inside of the rectangle")
                 return True 
 
+    def overlaps(self, other):
+        """Checks if shape overlaps another shape
+        Args:
+            Other (Shape): an Instance of shape
+            
+        returns:
+            bool: True is interception exist, false otherwise
+        """
+        if isinstance(other, Rectangle):
+            # Check if rectangle has area of zero.
+            if self.area() == 0.0:
+                return False
+
+            if other.area() == 0.0:
+                return False
+
+            x, y = 0, 1 #For simplicity and readability.
+            # Check if rectangle is on left side of other.
+            if self.tl[x] > other.br[x] or other.tl[x] > self.br[x]:
+                print("Shapes do not overlap.")
+                return False
+
+            # Check if rectangle is above the other.
+            if self.br[y] > other.tl[y] or other.br[y] > self.tl[y]:
+                print("Shapes do not overlap.")
+                return False
+
+            else:
+                print("It overlaps!")
+                return True
+        if isinstance(other, Circle):
+            new_x = other.x - max(self.x, min(other.x, self.x + self.width))
+            new_y = other.y - max(self.y, min(other.y, self.y + self.height))
+            if (new_x * new_x + new_y * new_y) < (other.radius * other.radius):
+                print("Shapes do overlap.")
+                return True
+            else:
+                print("Shapes do not overlap.")
+                return False
+            
+            
 
     def perimeter(self) -> float:
         """Returns the perimeter of the rectangle
@@ -158,6 +199,11 @@ class Rectangle(Shape):
             str: A string from which the shape could be instantiated.
         """
         return f"Rectangle (x = {self.x}, y = {self.y}, width = {self.width}, height = {self.height})"
+    
+    @classmethod
+    def create(cls):
+        """Creates a instance of the shape"""
+        return Rectangle(0, 0, 1, 1)
     
     # def __eq__(self, other) -> bool:
     """Used dataclasses built in __eq__ method to compare if both shape are of equal x, y, width and height"""

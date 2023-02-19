@@ -46,10 +46,12 @@ class Shape():
         x, y = 0, 1 #For simplicity and readability.
         # Check if rectangle is on left side of other.
         if self.tl[x] > other.br[x] or other.tl[x] > self.br[x]:
+            print("Shapes do not overlap.")
             return False
         
         # Check if rectangle is above the other.
         if self.br[y] > other.tl[y] or other.br[y] > self.tl[y]:
+            print("Shapes do not overlap.")
             return False
         
         else:

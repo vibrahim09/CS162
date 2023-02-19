@@ -77,7 +77,8 @@ class Circle(Shape):
             str: a string representation of the circle.
         """
         
-        return f"This circle initial coordinate is ({self.x}, {self.y}) with radius: {self.radius}."
+        return f"""This circle is initialized at point ({self.x}, {self.y}), with radius = {self.radius},
+    area = {self.area()}, and circumference = {self.circumference()}"""
     def __repr__(self) -> str:
         """Generate a string representation of the shape.
         
