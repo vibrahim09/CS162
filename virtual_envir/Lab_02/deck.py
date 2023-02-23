@@ -72,7 +72,7 @@ class Deck:
         for index, card in enumerate(self.__deck):
             if not index % cols:
                 print()
-            print(f"{card!s:4}", end="")
+            print(f"{card!s:8}", end="")
         print("\n" * 2)
 
     def is_empty(self) -> bool:
