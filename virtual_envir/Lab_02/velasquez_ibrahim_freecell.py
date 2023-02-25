@@ -1,11 +1,11 @@
 """Write a program to create a game of FreeCell
 
 """
+import random
 from deck import Deck
-from card import Card
-
-
-class FreeCell():
+#Using random.seed for testing purposes.
+random.seed(100)
+class FreeCell:
     """Create a game of FreeCell"""
     deck = Deck()
     deck.shuffle()
@@ -34,38 +34,47 @@ class FreeCell():
         for i in range(4):
             print(f"{i + 1:>8}", end='')
         print()
-        for _ in self.cells:
+        for i in self.cells:
             try:
-                print("%8s" % (_[0]), end='')
+                print(f"{f'{i[0]}':>8s}", end='')
             except IndexError:
-                print("%8s" % (''), end='')
-
+                print(f"{'[]':>8s}", end='')
         print('    ', end='')
         for stack in self.foundation:
             try:
-                print("%8s" % (stack[-1]), end='')
+                print(f"{f'{stack[-1]}':>8s}", end='')
             except IndexError:
-                print("%8s" % (''), end='')
-
+                print(f"{'[]':>8s}", end='')
         print()
-        print('------------------------------------------------------------------------')
+        print(f"{'-'*70}")
         print("  Tableau")
         for i in range(len(self.tableau)):
             print(f"{i + 1:>8}", end="")
         print()
-        print('------------------------------------------------------------------------')
+        print(f"{'-'*70}")
         max_length = max([len(stack) for stack in self.tableau])
-
         for i in range(max_length):
             print(' ', end='')
             for stack in self.tableau:
-
                 try:
-                    print("%8s" % (stack[i]), end='')
+                    print(f"{f'{stack[i]}':>8s}", end='')
                 except IndexError:
-                    print("%8s" % (''), end='')
+                    print(f"{'':>8s}", end='')
             print()
-        print('------------------------------------------------------------------------')
+        print(f"{'-'*70}")
+    @classmethod
+    def card_color(cls, card):
+        """Grabs the cards suit and converts it to a color (Black or Red)
+        args:
+            card (Class): instance of card class
+        returns:
+            Color (str): color of the card suit
+        """
+        if card.suit() == 1 or card.suit() == 4:
+            return 'black'
+        if card.suit() == 2 or card.suit() == 3:
+            return 'red'
+        return False
     def tableau_to_foundation(self, col_t, col_f):
         """Move a card to the foundation.
         args: col_t (int): the column of the card to be moved
@@ -79,8 +88,8 @@ class FreeCell():
         if tableau == []:
             return False
         if foundation == []:
-            return tableau[-1].rank == 1
-        return foundation[-1].suit == tableau[-1].suit and foundation[-1].rank < tableau[-1].rank
+            return tableau[-1].rank() == 1
+        return foundation[-1].suit() == tableau[-1].suit() and foundation[-1].rank() == tableau[-1].rank() - 1
     def cell_to_foundation(self, col_c, col_f):
         """Move a cell card to the foundation.
         args: col_c (int): the column of the card to be moved from the cell.
@@ -95,7 +104,7 @@ class FreeCell():
             return False
         if foundation == []:
             return cell[-1] == 1
-        return foundation[-1].suit == cell[-1].suit and foundation[-1].rank < cell[-1].rank
+        return foundation[-1].suit() == cell[-1].suit() and foundation[-1].rank() == cell[-1].rank() - 1
     def tableau_to_cell(self, col_c):
         """Move a tableau card to the cell pile.
         args:
@@ -122,7 +131,7 @@ class FreeCell():
             return True
         cell_card = self.cells[col_c - 1][-1]
         tableau_card = self.tableau[col_t - 1][-1]
-        return cell_card.rank < tableau_card.rank and cell.suit != tableau_card.suit
+        return cell_card.rank() == tableau_card.rank() - 1 and self.card_color(cell_card) != self.card_color(tableau_card)
     def tableau_to_tableau(self, col_t1, col_t2):
         """Move a tableau card to the another column in tableau.
         args: col_t1 (int): the column of the card to be moved from the tableau.
@@ -139,7 +148,7 @@ class FreeCell():
             return True
         initial_card = initial[-1]
         final_card = final[-1]
-        return initial_card.rank < final_card.rank and final_card.suit != final_card.suit
+        return initial_card.rank() == final_card.rank() - 1 and self.card_color(initial_card) != self.card_color(final_card)
     def t2f(self, col_t, col_f):
         """Move a card to the foundation.
         args: col_t (int): the column of the card to be moved
@@ -147,7 +156,7 @@ class FreeCell():
         """
         if self.tableau_to_foundation(col_t, col_f):
             card = self.tableau[col_t - 1].pop()
-            self.foundation[col_f].append(card)
+            self.foundation[col_f - 1].append(card)
         else:
             print("Invalid move!")
     def t2c(self, col_t, col_c):
@@ -227,11 +236,41 @@ def main():
     print("Here is the help menu to help you play the game:\n")
     game.help()
     game.instructions()
-    
-    
-    
-    
-    
+    while not game.win():
+        game.print_game()
+        mode = input("What is your mode move eg. (t2f): ").strip()
+        column_input = input("from which source to what destination eg.(1 2)-make sure to include a space in between numbers: ")
+        column_input = column_input.split()
+        column_input = [int(i) for i in column_input]
+        print(f"Your move: {mode, column_input}")
+        match mode:
+            case "t2f":
+                col_t = column_input[0]
+                col_f = column_input[1]
+                game.t2f(col_t, col_f)
+            case "t2c":
+                col_t = column_input[0]
+                col_c = column_input[1]
+                game.t2c(col_t, col_c)
+            case "t2t":
+                col_t1 = column_input[0]
+                col_t2 = column_input[1]
+                game.t2t(col_t1, col_t2)
+            case "c2t":
+                col_c = column_input[0]
+                col_t = column_input[1]
+                game.c2t(col_c, col_t)
+            case "c2f":
+                col_c = column_input[0]
+                col_f = column_input[1]
+                game.c2f(col_c, col_f)
+            case "h":
+                game.help()
+            case "q":
+                print("Thanks for playing!")
+                break
+            case _:
+                print("Unknown command.")
 if __name__=='__main__':
     main()
     
