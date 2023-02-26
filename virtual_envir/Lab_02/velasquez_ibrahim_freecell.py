@@ -239,7 +239,7 @@ def main():
     while not game.win():
         game.print_game()
         mode = input("What is your mode move eg. (t2f): ").strip()
-        column_input = input("from which source to what destination eg.(1 2)-make sure to include a space in between numbers: ")
+        column_input = input("""from which source to what destination eg.(1 2)-make sure to include a space in between numbers: """)
         column_input = column_input.split()
         column_input = [int(i) for i in column_input]
         print(f"Your move: {mode, column_input}")
