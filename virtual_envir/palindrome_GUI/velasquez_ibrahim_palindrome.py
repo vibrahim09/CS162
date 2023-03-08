@@ -1,8 +1,6 @@
 import sys
 import string
-from pathlib import Path
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QAction, QKeySequence
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -11,12 +9,8 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QHBoxLayout,
-    QFileDialog,
-    QSpinBox,
     QPlainTextEdit,
     QGridLayout,
-    QToolBar,
-    QMessageBox,
     QCheckBox,
 )
 
