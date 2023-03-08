@@ -37,11 +37,20 @@ class MainWindow(QMainWindow):
 
         # Set the widgets for the main window
         self.textEdit = QPlainTextEdit(parent=self)
+        self.textEdit.setPlaceholderText("Type a word or phrase to test.")
         self.testButton = QPushButton("Test", parent=self)
         self.testButton.clicked.connect(self.cleanString)
+        self.clearButton = QPushButton("Clear", parent=self)
+        self.clearButton.clicked.connect(self.onClear)
         self.palindromeLabel = QLabel("Is it a palindrome?", parent=self)
+        self.palindromeLabel.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         self.answerLabel = QLabel("", parent=self)
         self.answerLabel.setStyleSheet("font-size: 24px")
+        self.answerLabel.setAlignment(
+            Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
+        )
         self.checkBox = QCheckBox("Include Spaces?", parent=self)
         # Setting the layout for the main Window.
         layout = QGridLayout()
@@ -53,6 +62,7 @@ class MainWindow(QMainWindow):
         hBox.addWidget(self.answerLabel)
         vBox2.addWidget(self.checkBox)
         vBox2.addWidget(self.testButton)
+        vBox2.addWidget(self.clearButton)
         layout.addLayout(vBox2, 0, 1)
         layout.addLayout(vBox, 0, 0)
         layout.addLayout(hBox, 1, 0)
@@ -60,6 +70,11 @@ class MainWindow(QMainWindow):
         centralWidget = QWidget(parent=self)
         centralWidget.setLayout(layout)
         self.setCentralWidget(centralWidget)
+
+    def onClear(self):
+        """Clear the text box and the palindrome answer label."""
+        self.answerLabel.clear()
+        self.textEdit.clear()
 
     def onLabelChanged(self, answer: bool):
         """Checks if palindrome is true, if so it will display if yes palindrome not otherwise"""
