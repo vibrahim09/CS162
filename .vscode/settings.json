@@ -1,8 +1,0 @@
-{
-    "pylint.args": [
-        "--extension-pkg-whitelist+PyQt6"
-    ],
-    "python.formatting.provider": "black",
-    "editor.formatOnSaveMode": "file",
-    "editor.formatOnSave": true,
-}
