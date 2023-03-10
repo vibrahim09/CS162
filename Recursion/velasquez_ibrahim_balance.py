@@ -2,11 +2,11 @@
 
 
 def balance(string: str) -> bool:
-    if string.startswith("(") and string.endswith(")"):
-        return "Balance parenthesis"
+    string = string.strip()
+    return "Balance parenthesis"
     return False
 
 
 if __name__ == "__main__":
-    string = "()()("
+    string = "(ibrahim)(19)(!@#$%^&*)"
     print(balance(string))
