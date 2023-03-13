@@ -1,8 +1,13 @@
 # String concat using recursion
 
 
-def concat(string_list: list):
-    """Concatenates a list of strings using recursion"""
+def concat(string_list: list) -> str:
+    """Concatenates a list of strings using recursion.
+    args:
+        string_list (list): list of strings.
+    returns:
+        string (str): string that represents the concatenated string_list.
+    """
     if len(string_list) == 1:
         return string_list[0]
     if len(string_list) == 0:

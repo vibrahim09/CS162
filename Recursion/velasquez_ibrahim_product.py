@@ -1,8 +1,13 @@
 # Recursive product function
 
 
-def product(int_lst: list):
-    """Multiplies every element of the list as long as they are integers"""
+def product(int_lst: list) -> int:
+    """Multiplies every element of the list as long as they are integers
+    args:
+        int_list (lst): list of integers.
+    returns:
+        product (int): the product of the list.
+    """
     # Base cases.
     if len(int_lst) == 0:
         return 1
